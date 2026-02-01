@@ -1,3 +1,34 @@
+# Founder Working‑Capital Loan — Overview
+
+![Founder Loan](https://img.shields.io/badge/Founder%20Loan-Active-blue?style=flat-square)
+![Interest](https://img.shields.io/badge/Interest-0%25-brightgreen?style=flat-square)
+![Maturity](https://img.shields.io/badge/Maturity-No%20Deadline-lightgrey?style=flat-square)
+![Governance](https://img.shields.io/badge/Governance-Structured-purple?style=flat-square)
+![Docs](https://img.shields.io/badge/Docs-Complete-blue?style=flat-square)
+
+[📜 Terms](loan-terms.md) • [⚙️ Operations](governance-operations.md) • [📊 Ledger](loan-ledger-guide.md)
+
+## Purpose
+The Founder Working‑Capital Loan provides GitDigital Products LLC with flexible, non‑predatory capital to support operations, build business credit, and maintain clean governance.
+
+## Why This Exists
+- Bootstrapping without external investors  
+- Funding hardware, software, and operational runway  
+- Establishing business credit  
+- Maintaining strict separation between personal and business finances  
+- Creating a transparent, auditable financing structure  
+
+## Core Principles
+- 0% interest  
+- No maturity date  
+- Repay only when profitable  
+- Forgiveness allowed  
+- Fully documented  
+- Governance‑aligned
+
+Next → [Loan Terms](loan-terms.md)
+
+ 
  Governance & Operations Guide
 
 Founder Loan Governance & Operations Guide
