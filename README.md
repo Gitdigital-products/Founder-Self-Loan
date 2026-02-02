@@ -1,3 +1,6 @@
+
+
+
 # Founder Working‑Capital Loan — Overview
 
 ![Founder Loan](https://img.shields.io/badge/Founder%20Loan-Active-blue?style=flat-square)
