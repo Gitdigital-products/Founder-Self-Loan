@@ -1,0 +1,123 @@
+Loan Ledger — JSON Schema (v1.0.0)
+
+Strict • Deterministic • Audit‑Ready
+
+`json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gitdigital-products.github.io/schemas/loan-ledger-entry.schema.json",
+  "title": "Loan Ledger Entry",
+  "description": "Schema for validating a single row of the Founder Working‑Capital Loan ledger.",
+  "type": "object",
+
+  "required": [
+    "Date",
+    "Type",
+    "Amount",
+    "Category",
+    "Purpose/Notes",
+    "Source of Funds",
+    "Receipt/Evidence Link",
+    "Running Balance",
+    "Reviewer",
+    "Attachments"
+  ],
+
+  "properties": {
+    "Date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "ISO‑8601 date (YYYY‑MM‑DD)."
+    },
+
+    "Type": {
+      "type": "string",
+      "enum": [
+        "disbursement",
+        "repayment",
+        "forgiveness",
+        "correction"
+      ]
+    },
+
+    "Amount": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Positive decimal amount."
+    },
+
+    "Category": {
+      "type": "string",
+      "description": "Category must match allowed values for the given Type.",
+      "enum": [
+        "hardware",
+        "software",
+        "services",
+        "operations",
+        "infrastructure",
+        "repayment",
+        "forgiveness",
+        "correction"
+      ]
+    },
+
+    "Purpose/Notes": {
+      "type": "string",
+      "minLength": 5,
+      "description": "Clear description of the transaction."
+    },
+
+    "Source of Funds": {
+      "type": "string",
+      "enum": [
+        "personal-card",
+        "personal-bank",
+        "company-bank",
+        "N/A"
+      ]
+    },
+
+    "Receipt/Evidence Link": {
+      "type": "string",
+      "description": "URL or N/A.",
+      "pattern": "^(https://|N/A)"
+    },
+
+    "Running Balance": {
+      "type": "number",
+      "description": "Updated principal balance after this entry."
+    },
+
+    "Reviewer": {
+      "type": "string",
+      "description": "Founder initials.",
+      "pattern": "^[A-Z]{1,4}$"
+    },
+
+    "Attachments": {
+      "type": "string",
+      "description": "Optional comma‑separated URLs or GitHub references.",
+      "nullable": true
+    }
+  },
+
+  "additionalProperties": false
+}
+`
+
+---
+
+What this schema enforces
+- Correct column names  
+- Correct data types  
+- Allowed enums for Type, Category, and Source  
+- ISO date format  
+- Positive decimal amounts  
+- Valid URL or N/A for receipts  
+- Reviewer initials format  
+- No extra fields  
+
+This schema does not enforce running‑balance math or cross‑row logic — that belongs in your validator — but it enforces everything a single row can validate in isolation.
+
+---
+
