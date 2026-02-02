@@ -1,0 +1,134 @@
+id: founder_self_loan_business_formation
+version: 1
+
+loan_terms:
+  principal_amount: configurable
+  down_payment:
+    required: false
+    amount: 0
+  interest:
+    initial_rate: 0
+    interest_free_period_months: 12
+    auto_change_after_period: false
+    requires_governance_action: true
+
+milestones:
+  - id: M1_FORMATION_DOCS
+    name: State formation documents submitted
+    required: true
+    validator: kyc_validator
+    inputs:
+      - articles_of_organization
+      - state_filing_receipt
+    disbursement:
+      id: D1_FILING_FEE
+      amount_type: fixed
+      amount_value: 50
+      pay_to: founder
+  - id: M2_BUSINESS_BANK_ACCOUNT
+    name: Business bank account opened
+    required: true
+    validator: kyc_validator
+    preconditions:
+      - milestone: M1_FORMATION_DOCS
+        must_be: APPROVED
+    inputs:
+      - bank_letter_or_voided_check
+      - bank_account_metadata
+    disbursement:
+      id: D2_REMAINING_FUNDS
+      amount_type: remaining_principal
+      pay_to: business_account
+
+states:
+  - id: NEW
+    transitions:
+      - on: KYC_SUBMITTED
+        to: KYC_IN_REVIEW
+
+  - id: KYC_IN_REVIEW
+    transitions:
+      - on: KYC_APPROVED
+        to: ELIGIBLE_FOR_LOAN
+      - on: KYC_REJECTED
+        to: KYC_FAILED
+
+  - id: KYC_FAILED
+    transitions:
+      - on: KYC_RESUBMITTED
+        to: KYC_IN_REVIEW
+
+  - id: ELIGIBLE_FOR_LOAN
+    transitions:
+      - on: LOAN_ISSUED
+        to: LOAN_ACTIVE
+
+  - id: LOAN_ACTIVE
+    transitions:
+      - on: M1_DOCS_SUBMITTED
+        to: M1_IN_REVIEW
+      - on: CANCELLED_BY_GOVERNANCE
+        to: CANCELLED
+
+  - id: M1_IN_REVIEW
+    transitions:
+      - on: M1_APPROVED
+        to: M1_COMPLETED
+      - on: M1_REJECTED
+        to: M1_FAILED
+
+  - id: M1_FAILED
+    transitions:
+      - on: M1_RESUBMITTED
+        to: M1_IN_REVIEW
+      - on: CANCELLED_BY_GOVERNANCE
+        to: CANCELLED
+
+  - id: M1_COMPLETED
+    transitions:
+      - on: M2_BANK_DOCS_SUBMITTED
+        to: M2_IN_REVIEW
+
+  - id: M2_IN_REVIEW
+    transitions:
+      - on: M2_APPROVED
+        to: M2_COMPLETED
+      - on: M2_REJECTED
+        to: M2_FAILED
+
+  - id: M2_FAILED
+    transitions:
+      - on: M2_RESUBMITTED
+        to: M2_IN_REVIEW
+      - on: CANCELLED_BY_GOVERNANCE
+        to: CANCELLED
+
+  - id: M2_COMPLETED
+    transitions:
+      - on: LOAN_AGE_REACHED_12_MONTHS
+        to: INTEREST_REVIEW_WINDOW
+
+  - id: INTEREST_REVIEW_WINDOW
+    transitions:
+      - on: GOVERNANCE_DECISION_KEEP_ZERO_INTEREST
+        to: LOAN_IN_REPAYMENT
+      - on: GOVERNANCE_DECISION_SET_NEW_TERMS
+        to: LOAN_IN_REPAYMENT
+      - on: GOVERNANCE_DECISION_FORGIVE_LOAN
+        to: LOAN_FORGIVEN
+
+  - id: LOAN_IN_REPAYMENT
+    transitions:
+      - on: LOAN_PAID_OFF
+        to: LOAN_COMPLETED
+      - on: TERMS_MODIFIED_BY_GOVERNANCE
+        to: LOAN_IN_REPAYMENT
+
+  - id: LOAN_FORGIVEN
+    terminal: true
+
+  - id: LOAN_COMPLETED
+    terminal: true
+
+  - id: CANCELLED
+    terminal: true
