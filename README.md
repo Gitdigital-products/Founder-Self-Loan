@@ -1,4 +1,705 @@
+https://img.shields.io/badge/❤️-Support%20the%20Project-red⚖️
 
+🔘 Support Buttons (Emoji-Coded, On-Brand)
+
+Header badge (top of README)
+
+
+
+[![❤️ Support](https://img.shields.io/badge/❤️-Support%20the%20Project-red)](https://github.com/sponsors/Gitdigital-products)
+
+
+[![Sponsor](https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-pink)](https://github.com/sponsors/Gitdigital-products)
+[![Coffee](https://img.shields.io/badge/☕-Buy%20Me%20a%20Coffee-yellow)](LINK_HERE)
+
+(We’ll wire the second link once you confirm the platform.)
+
+
+---
+
+❤️ Support Section (Bottom of README)
+
+Add this above the License section:
+
+## ❤️ Support the Project
+
+This repository exists to make founder finance boring, clean, and defensible.
+
+If this system helped you:
+- ⭐ Star the repo
+- 🐛 Open issues or PRs
+- ❤️ Support continued development
+
+Support helps fund:
+- Maintenance of legal templates
+- Expansion of governance patterns
+- Automation & tooling
+- Public founder infrastructure
+
+[![Sponsor](https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-pink)](https://github.com/sponsors/Gitdigital-products)
+
+---
+
+
+
+
+---
+
+⚙️ Optional: Native GitHub “Sponsor” Button
+
+This is the sleeper power move.
+
+If you enable GitHub Sponsors on the org:
+
+GitHub automatically adds a “Sponsor” button next to “Star”
+
+Zero README clutter required
+
+Highest trust signal
+
+
+You already have the org, so this is low effort, high return.
+
+
+---
+
+Why This Fits the Repo
+
+This isn’t “donate to my side project” energy.
+
+This is:
+
+Governance templates
+
+Financial structure
+
+Founder infrastructure
+
+Public good with private leverage
+
+
+Support makes sense here.
+
+
+---
+
+
+---
+
+🧠 Intent
+
+This document defines the structural logic of a Founder Self Loan.
+
+The goal is simple but serious:
+
+Allow a founder to inject capital into their own company
+
+Preserve clean governance
+
+Maintain auditable financial separation
+
+Avoid ambiguity around ownership vs debt
+
+
+This is debt, not equity cosplay.
+
+
+---
+
+💰 What a Founder Self Loan Is
+
+A Founder Self Loan is a formal debt obligation where:
+
+The Founder acts as Lender
+
+The Company (LLC) acts as Borrower
+
+
+The company receives working capital. The founder receives a documented receivable.
+
+No undocumented transfers. Ever.
+
+
+---
+
+⚖️ Authority Model
+
+The loan exists only if authority exists.
+
+Authority is granted via:
+
+⚖️ Founder Resolution (explicit approval)
+
+📜 Promissory Note (binding terms)
+
+📊 Loan Ledger (operational truth)
+
+
+If one is missing, the system is broken.
+
+
+---
+
+📜 Required Artifacts
+
+For a loan to be considered valid, all of the following must exist:
+
+⚖️ Founder Resolution approving the loan
+
+📜 Executed Promissory Note
+
+📊 Active Loan Ledger entry
+
+🚦 Declared status (🧪 → ✅)
+
+
+No exceptions. No retroactive magic.
+
+
+---
+
+📊 Ledger-First Reality
+
+The ledger is the source of truth.
+
+Every movement must be logged:
+
+Disbursement
+
+Repayment
+
+Interest accrual
+
+Adjustments
+
+
+If it’s not in the ledger, it didn’t happen.
+
+
+---
+
+🔒 Separation Principle
+
+Founder ≠ Company
+
+Even if you are the sole owner:
+
+Accounts remain separate
+
+Transfers are documented
+
+Terms are explicit
+
+
+This protects:
+
+You
+
+The company
+
+Future partners
+
+Future auditors
+
+
+
+---
+
+🚦 Lifecycle States
+
+🧪 Draft     → idea, not yet valid
+🟡 Review    → governance check
+✅ Approved  → active loan
+🔒 Locked    → closed / historical
+
+State must be declared at the top of every artifact.
+
+
+---
+
+📦 Versioning Rules
+
+Structural changes require a MINOR bump
+
+Term or interest changes require a MAJOR bump
+
+Typos = PATCH only
+
+
+Old versions are 🔒 locked, not edited.
+
+
+---
+
+🧬 System Invariants
+
+These rules never change:
+
+Debt is not equity
+
+Authority precedes money
+
+Ledger precedes memory
+
+Documentation beats intent
+
+
+Break these and the loan dissolves into chaos.
+
+
+---
+
+✅ Completion Criteria
+
+This structure is considered active when:
+
+All required artifacts exist
+
+Status is set to ✅ Approved
+
+Ledger is initialized
+
+
+Until then, this is just a plan.
+
+Perfect. Then we’re in execution mode 🧠💰
+
+I’ve just added the 🧠 Loan Structure document to the canvas. This one is the backbone — it defines what the system is, not just how it looks on paper. Everything else snaps to this like LEGO bricks.
+
+Here’s where we are now, clean and orderly:
+
+✅ Emoji-coded, governance-ready README
+
+✅ 🧠 Loan Structure (authority, intent, lifecycle, invariants)
+
+
+What’s coming next, already lined up:
+
+Next I’ll generate ⚖️ Founder Resolution
+This is the authority switch. It’s the document that makes the loan legally and logically exist. Emoji-coded, versioned, status-aware, zero fluff.
+
+After that:
+
+📜 Promissory Note (terms, interest, repayment)
+
+📊 Loan Ledger (operational truth)
+
+🚦 Status & Versioning Spec (single source for lifecycle rules)
+
+🧾 Clean templates for each
+
+✅ Filled real-world example tying everything together
+
+
+You’re doing this the right way: structure first, money second. That’s how you avoid future pain and “uhhh we’ll figure it out later” energy.
+
+I’m rolling straight into ⚖️ Founder Resolution next.
+
+
+⚖️ Founder Resolution — Founder Self Loan
+
+🚦 Status: 🧪 Draft
+📦 Version: v1.0.0
+🔒 Scope: Internal — Founder Authority
+
+
+---
+
+⚖️ Purpose
+
+This resolution formally authorizes the Company to enter into a Founder Self Loan.
+
+Without this document, no loan exists — only undocumented transfers.
+
+This resolution:
+
+Grants authority
+
+Defines intent
+
+Protects separation between Founder and Company
+
+
+
+---
+
+🧠 Acting Authority
+
+The undersigned Founder is the sole authorized decision-maker of the Company and acts in accordance with the Company’s governing documents.
+
+This authority includes the power to:
+
+Approve debt obligations
+
+Execute promissory notes
+
+Accept capital contributions structured as loans
+
+
+
+---
+
+💰 Loan Authorization
+
+The Founder hereby authorizes the Company to:
+
+Borrow funds from the Founder
+
+Treat such funds as a formal debt obligation
+
+Repay the loan according to the terms defined in the executed 📜 Promissory Note
+
+
+The loan is not equity, compensation, or reimbursement.
+
+
+---
+
+📜 Required Documents
+
+This resolution is valid only when the following artifacts exist:
+
+📜 Executed Promissory Note
+
+📊 Active Loan Ledger
+
+🧠 Loan Structure Document
+
+
+All artifacts must reference the same versioned loan.
+
+
+---
+
+🔒 Compliance Commitments
+
+The Company commits to:
+
+Maintaining separate accounts
+
+Recording all transactions in the ledger
+
+Following declared repayment terms
+
+Preserving documentation for audit or review
+
+
+
+---
+
+🚦 Effective Date
+
+This resolution becomes effective as of:
+
+Effective Date: ______________________
+
+
+---
+
+🧾 Signatures
+
+By signing below, the Founder affirms that this resolution is executed in good faith and in the best interest of the Company.
+
+Founder Name: ____________________________
+Title: Founder / Managing Member
+Date: _________________________________
+
+Company Name: ___________________________
+Entity Type: LLC
+
+
+---
+
+🚦 Lifecycle
+
+🧪 Draft     – Not yet effective
+🟡 Review    – Governance check
+✅ Approved  – Authority granted
+🔒 Locked    – Historical record
+
+Once approved, this document must be 🔒 locked and not edited.
+
+Locked and loaded ⚖️
+
+The Founder Resolution is now live in canvas. This is the authority switch — the moment where the system goes from “idea” to “allowed.” Without this doc, everything else is just money teleporting around with crossed fingers.
+
+So far, your stack is looking very intentional:
+
+✅ Emoji-coded README (system map + rules)
+
+✅ 🧠 Loan Structure (logic + invariants)
+
+✅ ⚖️ Founder Resolution (legal authority)
+
+
+This is the correct order, by the way. Authority before obligation before money. Ancient Roman energy, very scalable.
+
+Next up is the heavyweight:
+
+📜 Promissory Note
+This one defines:
+
+Principal
+
+Interest (or explicitly none)
+
+Repayment terms
+
+Default logic
+
+Governing law
+
+What happens when time passes and memories fail
+
+
+Once that’s in place, we’ll follow with:
+
+📊 Loan Ledger (operational truth)
+
+🚦 Status & Versioning spec
+
+🧾 Clean templates
+
+✅ Filled example tying it all together
+
+
+I’m moving straight into the 📜 Promissory Note next.
+
+
+https://img.shields.io/badge/❤️-Support%20the%20Project-red⚖️ Founder Resolution — Founder Self Loan
+
+🚦 Status: 🧪 Draft
+📦 Version: v1.0.0
+🔒 Scope: Internal — Founder Authority
+
+
+---
+
+⚖️ Purpose
+
+This resolution formally authorizes the Company to enter into a Founder Self Loan.
+
+Without this document, no loan exists — only undocumented transfers.
+
+This resolution:
+
+Grants authority
+
+Defines intent
+
+Protects separation between Founder and Company
+
+
+
+---
+
+🧠 Acting Authority
+
+The undersigned Founder is the sole authorized decision-maker of the Company and acts in accordance with the Company’s governing documents.
+
+This authority includes the power to:
+
+Approve debt obligations
+
+Execute promissory notes
+
+Accept capital contributions structured as loans
+
+
+
+---
+
+💰 Loan Authorization
+
+The Founder hereby authorizes the Company to:
+
+Borrow funds from the Founder
+
+Treat such funds as a formal debt obligation
+
+Repay the loan according to the terms defined in the executed 📜 Promissory Note
+
+
+The loan is not equity, compensation, or reimbursement.
+
+
+---
+
+📜 Required Documents
+
+This resolution is valid only when the following artifacts exist:
+
+📜 Executed Promissory Note
+
+📊 Active Loan Ledger
+
+🧠 Loan Structure Document
+
+
+All artifacts must reference the same versioned loan.
+
+
+---
+
+🔒 Compliance Commitments
+
+The Company commits to:
+
+Maintaining separate accounts
+
+Recording all transactions in the ledger
+
+Following declared repayment terms
+
+Preserving documentation for audit or review
+
+
+
+---
+
+🚦 Effective Date
+
+This resolution becomes effective as of:
+
+Effective Date: ______________________
+
+
+---
+
+🧾 Signatures
+
+By signing below, the Founder affirms that this resolution is executed in good faith and in the best interest of the Company.
+
+Founder Name: ____________________________
+Title: Founder / Managing Member
+Date: _________________________________
+
+Company Name: ___________________________
+Entity Type: LLC
+
+
+---
+
+🚦 Lifecycle
+
+🧪 Draft     – Not yet effective
+🟡 Review    – Governance check
+✅ Approved  – Authority granted
+🔒 Locked    – Historical record
+
+Once approved, this document must be 🔒 locked and not edited.
+
+Got you — conceptually yes, technically I just hit a canvas pattern mismatch trying to inject it automatically. No stress, we’ll do it clean and intentional instead of brute-forcing it.
+
+Here’s the support button system you want, exactly how it should look and where it should live.
+
+Where the support button belongs
+
+Two places, max:
+
+1. Top of README (with badges → visibility)
+
+
+2. Bottom of README (with context → legitimacy)
+
+
+
+You never want it to feel like a tip jar. It should feel like patronage of infrastructure.
+
+
+---
+
+🔘 Support Buttons (Emoji-Coded, On-Brand)
+
+Header badge (top of README)
+
+Drop this right under your existing badges:
+
+[![❤️ Support](https://img.shields.io/badge/❤️-Support%20the%20Project-red)](https://github.com/sponsors/Gitdigital-products)
+
+That’s clean, subtle, and GitHub-native.
+
+If you want multiple options:
+
+[![Sponsor](https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-pink)](https://github.com/sponsors/Gitdigital-products)
+[![Coffee](https://img.shields.io/badge/☕-Buy%20Me%20a%20Coffee-yellow)](LINK_HERE)
+
+(We’ll wire the second link once you confirm the platform.)
+
+
+---
+
+❤️ Support Section (Bottom of README)
+
+Add this above the License section:
+
+## ❤️ Support the Project
+
+This repository exists to make founder finance boring, clean, and defensible.
+
+If this system helped you:
+- ⭐ Star the repo
+- 🐛 Open issues or PRs
+- ❤️ Support continued development
+
+Support helps fund:
+- Maintenance of legal templates
+- Expansion of governance patterns
+- Automation & tooling
+- Public founder infrastructure
+
+[![Sponsor](https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-pink)](https://github.com/sponsors/Gitdigital-products)
+
+No begging. No cringe. Just clarity.
+
+
+---
+
+⚙️ Optional: Native GitHub “Sponsor” Button
+
+This is the sleeper power move.
+
+If you enable GitHub Sponsors on the org:
+
+GitHub automatically adds a “Sponsor” button next to “Star”
+
+Zero README clutter required
+
+Highest trust signal
+
+
+You already have the org, so this is low effort, high return.
+
+
+---
+
+Why This Fits the Repo
+
+This isn’t “donate to my side project” energy.
+
+This is:
+
+Governance templates
+
+Financial structure
+
+Founder infrastructure
+
+Public good with private leverage
+
+
+Support makes sense here.
+
+
+---
+
+Next in the pipeline (already queued): 📜 Promissory Note
+📊 Loan Ledger
+🚦 Status & Versioning
+🧾 Templates
+✅ Filled example
+
+Once those land, this repo is Sponsor-worthy by default.
 
 
 # Founder Working‑Capital Loan — Overview
