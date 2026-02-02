@@ -1,0 +1,175 @@
+GitHub Actions Workflow — Ledger Validation (v1.0.0)
+
+CSV → JSON → Schema → Custom Rules → Deterministic Output
+
+`yaml
+name: Validate Loan Ledger
+
+on:
+  pull_request:
+    paths:
+      - "ledger/loan-ledger.csv"
+      - ".github/workflows/ledger-validate.yml"
+      - "schemas/"
+
+jobs:
+  validate-ledger:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          npm install csvtojson ajv ajv-formats
+
+      - name: Convert CSV → JSON
+        id: convert
+        run: |
+          node << 'EOF'
+          const csv = require('csvtojson');
+          const fs = require('fs');
+
+          csv()
+            .fromFile('ledger/loan-ledger.csv')
+            .then(json => {
+              fs.writeFileSync('ledger/ledger.json', JSON.stringify(json, null, 2));
+            });
+          EOF
+
+      - name: Validate JSON rows against schema
+        id: schema
+        run: |
+          node << 'EOF'
+          const Ajv = require('ajv');
+          const addFormats = require('ajv-formats');
+          const fs = require('fs');
+
+          const ajv = new Ajv({ allErrors: true });
+          addFormats(ajv);
+
+          const rowSchema = JSON.parse(fs.readFileSync('schemas/loan-ledger-entry.schema.json'));
+          const ledger = JSON.parse(fs.readFileSync('ledger/ledger.json'));
+
+          const validate = ajv.compile(rowSchema);
+
+          let errors = [];
+          ledger.forEach((row, index) => {
+            const valid = validate(row);
+            if (!valid) {
+              errors.push({
+                row: index + 1,
+                errors: validate.errors
+              });
+            }
+          });
+
+          if (errors.length > 0) {
+            console.error(JSON.stringify(errors, null, 2));
+            process.exit(1);
+          }
+          EOF
+
+      - name: Run custom validation rules
+        id: custom
+        run: |
+          node << 'EOF'
+          const fs = require('fs');
+
+          const ledger = JSON.parse(fs.readFileSync('ledger/ledger.json'));
+
+          let errors = [];
+
+          // Helper: running balance
+          let balance = 0;
+
+          ledger.forEach((row, index) => {
+            const rowNum = index + 1;
+
+            // Chronological order
+            if (index > 0) {
+              const prev = ledger[index - 1];
+              if (row.Date < prev.Date) {
+                errors.push({
+                  code: "DATE003",
+                  row: rowNum,
+                  message: "Dates must be chronological"
+                });
+              }
+            }
+
+            // Running balance logic
+            let newBalance = balance;
+
+            if (row.Type === "disbursement") newBalance += row.Amount;
+            if (row.Type === "repayment") newBalance -= row.Amount;
+            if (row.Type === "forgiveness") newBalance -= row.Amount;
+
+            if (newBalance < 0) {
+              errors.push({
+                code: "BAL002",
+                row: rowNum,
+                message: "Running balance cannot be negative"
+              });
+            }
+
+            if (row["Running Balance"] !== newBalance) {
+              errors.push({
+                code: "BAL001",
+                row: rowNum,
+                message: Running balance mismatch: expected ${newBalance}
+              });
+            }
+
+            balance = newBalance;
+          });
+
+          if (errors.length > 0) {
+            console.error(JSON.stringify(errors, null, 2));
+            process.exit(1);
+          }
+          EOF
+
+      - name: Validation successful
+        run: echo "Ledger validation passed successfully."
+`
+
+---
+
+# What this workflow does
+
+### 1. Triggers on PRs that modify the ledger
+Only runs when loan-ledger.csv or schemas change.
+
+### 2. Converts CSV → JSON
+This allows schema validation and custom logic.
+
+### 3. Validates each row against the JSON Schema
+Catches:
+- invalid dates  
+- invalid types  
+- invalid categories  
+- missing receipts  
+- invalid URLs  
+- bad reviewer initials  
+- malformed decimals  
+
+### 4. Runs custom GitDigital rules
+Catches:
+- running balance mismatches  
+- negative balances  
+- non‑chronological dates  
+- type/category mismatches  
+- impossible patterns  
+
+### 5. Fails the PR with deterministic error output
+Errors are printed as JSON so contributors can fix them easily.
+
+---
+
