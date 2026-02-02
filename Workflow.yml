@@ -1,0 +1,204 @@
+loan_workflow_v1:
+  id: founder_self_loan_business_formation
+  version: 1
+
+  actors:
+    founder:            # person receiving the loan
+    co_founder:         # your co-owner / co-governor
+    governance_council: # you two together as a decision unit
+    kyc_validator:      # your automation engine
+    ledger_service:     # repo-backed loan + milestone ledger
+    disbursement_agent: # whoever actually sends funds (you, bank, PSP)
+
+  loan_terms:
+    principal_amount: configurable
+    down_payment:
+      required: false
+      amount: 0
+    interest:
+      initial_rate: 0          # 0% interest
+      interest_free_period: 12_months
+      auto_change_after_period: false
+      requires_governance_action: true
+      governance_signatures_required: 2
+    repayment:
+      starts_after:
+        - business_formed
+        - bank_account_open
+        - revenue_exists   # can be a boolean flag in ledger
+      minimum_payment_required_during_interest_free_period: false
+      penalties: none
+      fees: none
+
+  milestones:
+    - id: M1_FORMATION_DOCS
+      name: "State formation documents submitted"
+      required: true
+      inputs:
+        - articles_of_organization
+        - state_filing_receipt (optional but preferred)
+      validator: kyc_validator
+      status_values: [PENDING, APPROVED, REJECTED]
+      on_approved:
+        - event: DISBURSEMENT_1_APPROVED
+        - action: trigger_disbursement_1
+      disbursement:
+        id: D1_FILING_FEE
+        amount_type: fixed
+        amount_value: 50        # or configurable
+        pay_to: founder_wallet_or_account
+        ledger_updates:
+          - set: milestone_1_status = "APPROVED"
+          - append_log: "Disbursed filing fee to founder"
+          - update: loan_balance_disbursed += 50
+
+    - id: M2_BUSINESS_BANK_ACCOUNT
+      name: "Business bank account opened"
+      required: true
+      inputs:
+        - bank_letter_or_voided_check
+        - bank_account_metadata (optional)
+      validator: kyc_validator
+      status_values: [PENDING, APPROVED, REJECTED]
+      preconditions:
+        - milestone: M1_FORMATION_DOCS
+          must_be: APPROVED
+      on_approved:
+        - event: DISBURSEMENT_2_APPROVED
+        - action: trigger_disbursement_2
+      disbursement:
+        id: D2_REMAINING_FUNDS
+        amount_type: remaining_principal
+        pay_to: business_bank_account
+        ledger_updates:
+          - set: milestone_2_status = "APPROVED"
+          - append_log: "Disbursed remaining funds to business account"
+          - update: loan_balance_disbursed = principal_amount
+
+  states:
+    - id: NEW
+      description: "Loan created, founder profile exists, no KYC yet"
+      transitions:
+        - on: KYC_SUBMITTED
+          to: KYC_IN_REVIEW
+
+    - id: KYC_IN_REVIEW
+      description: "KYC validator reviewing identity + risk"
+      transitions:
+        - on: KYC_APPROVED
+          to: ELIGIBLE_FOR_LOAN
+        - on: KYC_REJECTED
+          to: KYC_FAILED
+
+    - id: KYC_FAILED
+      terminal: false
+      transitions:
+        - on: KYC_RESUBMITTED
+          to: KYC_IN_REVIEW
+
+    - id: ELIGIBLE_FOR_LOAN
+      description: "Founder verified; loan terms can be issued"
+      transitions:
+        - on: LOAN_ISSUED
+          to: LOAN_ACTIVE
+
+    - id: LOAN_ACTIVE
+      description: "Loan exists, milestones not yet completed"
+      transitions:
+        - on: M1_DOCS_SUBMITTED
+          to: M1_IN_REVIEW
+        - on: CANCELLED_BY_GOVERNANCE
+          to: CANCELLED
+
+    - id: M1_IN_REVIEW
+      description: "KYC validator checking formation docs"
+      transitions:
+        - on: M1_APPROVED
+          actions:
+            - trigger: DISBURSEMENT_1
+          to: M1_COMPLETED
+        - on: M1_REJECTED
+          to: M1_FAILED
+
+    - id: M1_FAILED
+      transitions:
+        - on: M1_RESUBMITTED
+          to: M1_IN_REVIEW
+        - on: CANCELLED_BY_GOVERNANCE
+          to: CANCELLED
+
+    - id: M1_COMPLETED
+      description: "Formation docs milestone complete; filing fee disbursed"
+      transitions:
+        - on: M2_BANK_DOCS_SUBMITTED
+          to: M2_IN_REVIEW
+
+    - id: M2_IN_REVIEW
+      description: "KYC validator checking bank account evidence"
+      transitions:
+        - on: M2_APPROVED
+          actions:
+            - trigger: DISBURSEMENT_2
+          to: M2_COMPLETED
+        - on: M2_REJECTED
+          to: M2_FAILED
+
+    - id: M2_FAILED
+      transitions:
+        - on: M2_RESUBMITTED
+          to: M2_IN_REVIEW
+        - on: CANCELLED_BY_GOVERNANCE
+          to: CANCELLED
+
+    - id: M2_COMPLETED
+      description: "All required milestones complete; full principal disbursed"
+      transitions:
+        - on: LOAN_AGE_REACHED_12_MONTHS
+          to: INTEREST_REVIEW_WINDOW
+
+    - id: INTEREST_REVIEW_WINDOW
+      description: "Non-automatic review period; governance must decide interest changes"
+      transitions:
+        - on: GOVERNANCE_DECISION_KEEP_ZERO_INTEREST
+          to: LOAN_IN_REPAYMENT
+        - on: GOVERNANCE_DECISION_SET_NEW_TERMS
+          to: LOAN_IN_REPAYMENT
+        - on: GOVERNANCE_DECISION_FORGIVE_LOAN
+          to: LOAN_FORGIVEN
+
+    - id: LOAN_IN_REPAYMENT
+      description: "Repayment phase under current terms"
+      transitions:
+        - on: LOAN_PAID_OFF
+          to: LOAN_COMPLETED
+        - on: TERMS_MODIFIED_BY_GOVERNANCE
+          to: LOAN_IN_REPAYMENT   # same state, new parameters
+
+    - id: LOAN_FORGIVEN
+      terminal: true
+
+    - id: LOAN_COMPLETED
+      terminal: true
+
+    - id: CANCELLED
+      terminal: true
+
+  governance:
+    signatures_required:
+      loan_issuance: 2
+      disbursement_1: 1_or_2   # you can decide; v1 could be 1 if you want speed
+      disbursement_2: 2
+      interest_change: 2
+      loan_forgiveness: 2
+      cancellation: 2
+
+  notifications:
+    - event: LOAN_ISSUED
+      channels: [slack, email]
+    - event: M1_APPROVED
+      channels: [slack]
+    - event: M2_APPROVED
+      channels: [slack]
+    - event: LOAN_AGE_REACHED_12_MONTHS
+      channels: [slack]
+      message: "Interest review window opened; governance action required"
