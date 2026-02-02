@@ -7,6 +7,47 @@
 ![Docs](https://img.shields.io/badge/Docs-Complete-blue?style=flat-square)
 
 [📜 Terms](loan-terms.md) • [⚙️ Operations](governance-operations.md) • [📊 Ledger](loan-ledger-guide.md)
+![Build](https://img.shields.io/github/actions/workflow/status/Gitdigital-products/Founder-Self-Loan/docs.yml)
+![Docs](https://img.shields.io/badge/docs-markdown-blue)
+![License](https://img.shields.io/github/license/Gitdigital-products/Founder-Self-Loan)
+![Last Commit](https://img.shields.io/github/last-commit/Gitdigital-products/Founder-Self-Loan)
+![Repo Size](https://img.shields.io/github/repo-size/Gitdigital-products/Founder-Self-Loan)
+![Issues](https://img.shields.io/github/issues/Gitdigital-products/Founder-Self-Loan)
+![Pull Requests](https://img.shields.io/github/issues-pr/Gitdigital-products/Founder-Self-Loan)
+![Maintained](https://img.shields.io/badge/maintained-yes-brightgreen)
+![Governance](https://img.shields.io/badge/governance-founder--controlled-purple)
+![Compliance](https://img.shields.io/badge/compliance-internal--ledger-orange)
+![Template](https://img.shields.io/badge/type-legal--template-blue)
+![Status](https://img.shields.io/badge/status-draft-yellow)
+![Version](https://img.shields.io/badge/version-v1.0.0-green)
+![Ledger](https://img.shields.io/badge/ledger-founder--loan-teal)
+![Accounting](https://img.shields.io/badge/accounting-double--entry-lightgrey)
+
+# Founder Self Loan — GitDigital Products
+
+A set of structured legal and financial documents for managing a founder-to-LLC loan.
+
+## Purpose
+Explain bootstrap "founder loan" to fund operations while keeping clean governance.
+
+## Contents
+- `Formal Promissory Note.md` – template
+- `Founder Resolution…` – governance authorization
+- `Loan Ledger Template.md` – template to track activity
+- `Loan Terms & Structure.md` – how the loan works
+- `Structure.md` – file/folder diagram
+
+## How to use
+1. Copy templates into your own repo or fork
+2. Fill in names/dates/amounts
+3. Track transactions in the ledger
+4. (Optional) Export to PDF
+
+## Contribute
+Guidelines for edits + formatting rules here.
+
+## License
+MIT
 
 ## Purpose
 The Founder Working‑Capital Loan provides GitDigital Products LLC with flexible, non‑predatory capital to support operations, build business credit, and maintain clean governance.
