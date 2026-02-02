@@ -1,0 +1,177 @@
+📘 Founder‑Loan Ledger Schema (repo‑ready)
+
+This is the structure your automation engine, KYC validator, governance actions, and disbursement logs will all write into.
+
+ drop this into a repo like:
+
+`
+founder-loan-ledger/
+  ├── loans/
+  ├── milestones/
+  ├── disbursements/
+  ├── governance/
+  └── schema/
+`
+
+And here’s the schema itself.
+
+---
+
+🧱 1. Loan Record Schema
+schema/loan.json
+
+`json
+{
+  "loan_id": "string",
+  "founder_id": "string",
+  "cofounderid": "string",
+
+  "principal_amount": "number",
+  "downpaymentrequired": false,
+  "downpaymentamount": 0,
+
+  "interest": {
+    "rate": 0,
+    "interestfreeperiod_months": 12,
+    "autochangeafter_period": false,
+    "requiresgovernanceaction": true,
+    "lastinterestchange": null
+  },
+
+  "status": "NEW | ACTIVE | IN_REPAYMENT | COMPLETED | FORGIVEN | CANCELLED",
+
+  "created_at": "timestamp",
+  "activated_at": "timestamp | null",
+  "completed_at": "timestamp | null",
+
+  "milestones": {
+    "M1FORMATIONDOCS": "PENDING | APPROVED | REJECTED",
+    "M2BUSINESSBANK_ACCOUNT": "PENDING | APPROVED | REJECTED"
+  },
+
+  "disbursements": {
+    "D1FILINGFEE": {
+      "amount": 50,
+      "status": "NOT_PAID | PAID",
+      "paid_at": "timestamp | null"
+    },
+    "D2REMAININGFUNDS": {
+      "amount": "number",
+      "status": "NOT_PAID | PAID",
+      "paid_at": "timestamp | null"
+    }
+  },
+
+  "ledger_log": [
+    {
+      "timestamp": "timestamp",
+      "actor": "system | founder | co_founder | governance",
+      "event": "string",
+      "details": "string"
+    }
+  ]
+}
+`
+
+---
+
+🧩 2. Milestone Record Schema
+schema/milestone.json
+
+`json
+{
+  "milestoneid": "M1FORMATIONDOCS | M2BUSINESSBANKACCOUNT",
+  "loan_id": "string",
+  "founder_id": "string",
+
+  "status": "PENDING | APPROVED | REJECTED",
+  "submitted_at": "timestamp | null",
+  "approved_at": "timestamp | null",
+  "rejected_at": "timestamp | null",
+
+  "validator": "kyc_validator",
+  "validator_metadata": {
+    "reason": "string | null",
+    "evidence_urls": ["string"]
+  }
+}
+`
+
+---
+
+💸 3. Disbursement Record Schema
+schema/disbursement.json
+
+`json
+{
+  "disbursementid": "D1FILINGFEE | D2REMAINING_FUNDS",
+  "loan_id": "string",
+  "founder_id": "string",
+
+  "amount": "number",
+  "payto": "founder | businessaccount",
+  "status": "NOT_PAID | PAID",
+  "paid_at": "timestamp | null",
+
+  "governance_signatures": [
+    {
+      "actor": "founder | co_founder",
+      "signed_at": "timestamp"
+    }
+  ],
+
+  "ledger_log": [
+    {
+      "timestamp": "timestamp",
+      "event": "string",
+      "details": "string"
+    }
+  ]
+}
+`
+
+---
+
+🏛️ 4. Governance Action Schema
+schema/governance_action.json
+
+`json
+{
+  "action_id": "string",
+  "loan_id": "string",
+
+  "actiontype": "ISSUELOAN | APPROVEDISBURSEMENT | MODIFYINTEREST | FORGIVELOAN | CANCELLOAN",
+
+  "requestedby": "founder | cofounder",
+  "requested_at": "timestamp",
+
+  "signatures_required": 2,
+  "signatures": [
+    {
+      "actor": "founder | co_founder",
+      "signed_at": "timestamp"
+    }
+  ],
+
+  "status": "PENDING | APPROVED | REJECTED",
+  "resolved_at": "timestamp | null",
+
+  "details": "string"
+}
+`
+
+---
+
+🔗 5. How This Connects to Your KYC Validator
+
+The validator will:
+
+- Write milestone results into /milestones/
+- Emit events that update /loans/loan_id.json
+- Trigger disbursement creation in /disbursements/
+- Append audit entries to ledger_log
+
+Everything stays off‑chain, audit‑ready, and fully automated.
+
+---
+
