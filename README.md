@@ -1,3 +1,4 @@
+
 https://img.shields.io/badge/❤️-Support%20the%20Project-red⚖️
 
 🔘 Support Buttons (Emoji-Coded, On-Brand)
@@ -10,7 +11,7 @@ Header badge (top of README)
 
 
 [![Sponsor](https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-pink)](https://github.com/sponsors/Gitdigital-products)
-[![Coffee](https://img.shields.io/badge/☕-Buy%20Me%20a%20Coffee-yellow)](LINK_HERE)
+[![Coffee](https://img.shields.io/badge/☕-Buy%20Me%20a%20Coffee-yellow)](https://gitdigital-products.github.io/sponsors)
 
 (We’ll wire the second link once you confirm the platform.)
 
